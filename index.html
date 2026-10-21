@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Shiksha – Colleges, Courses & Exams</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          burgundy: {
+            DEFAULT: '#a50c3e',
+            dark: '#7f0a2f',
+            light: '#c4204f',
+            bg: '#fdf3f5'
+          },
+          coral: '#ff6f61',
+          ink: '#2b2b2b'
+        },
+        fontFamily: {
+          sans: ['Montserrat', 'Segoe UI', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --c: #a50c3e;
+    --c2: #7f0a2f;
+    --co: #ff6f61;
+    --ink: #2b2b2b;
+    --mut: #666;
+  }
+  
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: #ffffff;
+    color: var(--ink);
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* 3-Column Editorial Grid Architecture */
+  .editorial-page {
+    position: relative;
+    max-width: 1500px;
+    margin: 0 auto;
+    background: #fff;
+  }
+
+  /* Central Burgundy Vertical Spine Effect */
+  .editorial-page::before {
+    content: "";
+    position: absolute;
+    left: 33.8%;
+    width: 32.4%;
+    top: 0;
+    bottom: 0;
+    background: var(--c);
+    z-index: 0;
+  }
+
+  /* Decorative Dot Grid Pattern Right Edge */
+  .editorial-page::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    background: radial-gradient(var(--c) 1.2px, transparent 1.6px) 0 0 / 9px 9px;
+    opacity: 0.35;
+    z-index: 0;
+  }
+
+  .editorial-row {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 33.8% 32.4% 33.8%;
+    align-items: stretch;
+  }
+
+  .col-L, .col-R {
+    padding: 50px clamp(20px, 3vw, 50px);
+    background: #fff;
+  }
+
+  .col-C {
+    color: var(--co);
+    text-align: center;
+    font-weight: 800;
+    font-size: clamp(24px, 3.2vw, 48px);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    padding: 60px 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .col-C span {
+    position: sticky;
+    top: 110px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    max-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Vertical Typography & Hero Grid */
+  .tg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 100%;
+  }
+
+  .tg-grid div {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: clamp(14px, 2vw, 28px);
+    color: rgba(255, 255, 255, 0.85);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tg-grid div::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(165, 12, 62, 0.45);
+  }
+
+  .tg-grid div span {
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  /* Custom Hover Effects */
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(165, 12, 62, 0.15);
+  }
+
+  /* Custom Scrollbar for Horizontal Sliders */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  @media (max-width: 960px) {
+    .editorial-page::before, .editorial-page::after { display: none; }
+    .editorial-row { display: flex; flex-direction: column; }
+    .col-C {
+      background: var(--c);
+      padding: 24px 20px;
+      font-size: 28px;
+      order: -1;
+      width: 100%;
+    }
+    .col-C span {
+      position: static;
+      writing-mode: horizontal-tb;
+      transform: none;
+    }
+    .col-L, .col-R { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+<!-- HEADER & NAVIGATION -->
+<header class="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+  <div class="max-w-[1500px] mx-auto px-4 lg:px-8 py-3.5 flex items-center justify-between gap-6">
+    
+    <!-- Brand Logo -->
+    <a href="#" class="flex items-center gap-2.5 text-burgundy font-extrabold text-2xl tracking-tight hover:opacity-90 transition">
+      <svg class="w-8 h-9" viewBox="0 0 34 40" fill="none">
+        <path d="M17 3 6 8l11 5 11-5z" fill="#a50c3e"/>
+        <path d="M5 18c8 0 10 6 12 14 2-8 4-14 12-14-3 8-6 11-12 20C11 29 8 26 5 18z" fill="#a50c3e"/>
+        <circle cx="17" cy="23" r="3" fill="#ff6f61"/>
+      </svg>
+      <span>shiksha</span>
+    </a>
+
+    <!-- Nav Items -->
+    <nav class="hidden md:flex items-center gap-1 flex-wrap justify-center">
+      <button onclick="toggleMenu('mba')" class="nav-btn px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-burgundy hover:bg-burgundy-bg rounded-md transition">MBA</button>
+      <button onclick="toggleMenu('engineering')" class="nav-btn px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-burgundy hover:bg-burgundy-bg rounded-md transition">Engineering</button>
+      <button onclick="toggleMenu('medical')" class="nav-btn px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-burgundy hover:bg-burgundy-bg rounded-md transition">Medical</button>
+      <button onclick="toggleMenu('design')" class="nav-btn px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-burgundy hover:bg-burgundy-bg rounded-md transition">Design</button>
+      <button onclick="toggleMenu('abroad')" class="nav-btn px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-burgundy hover:bg-burgundy-bg rounded-md transition">Study Abroad</button>
+      <button onclick="toggleMenu('more')" class="nav-btn px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-burgundy hover:bg-burgundy-bg rounded-md transition">More</button>
+    </nav>
+
+    <!-- Top Right Actions -->
+    <div class="flex items-center gap-4 text-xs font-bold uppercase tracking-wider text-burgundy">
+      <a href="#compare" class="hidden sm:inline-block hover:underline">Compare</a>
+      <a href="#login" class="px-3 py-1.5 border border-burgundy rounded hover:bg-burgundy hover:text-white transition">Login</a>
+      <a href="#signup" class="px-3 py-1.5 bg-burgundy text-white rounded hover:bg-burgundy-dark transition">Sign Up</a>
+    </div>
+  </div>
+
+  <!-- Dynamic Dropdown Drawer -->
+  <div id="nav-dropdown" class="hidden bg-white border-t border-gray-100 shadow-xl border-b border-burgundy/20 transition-all duration-300">
+    <div class="max-w-[1300px] mx-auto p-6 md:p-8 grid grid-cols-2 md:grid-cols-4 gap-6" id="dropdown-content">
+      <!-- Content populated by JS -->
+    </div>
+  </div>
+</header>
+
+<!-- MAIN EDITORIAL PAGE CONTAINER -->
+<div class="editorial-page">
+
+  <!-- SECTION 1: EDITORIAL HERO HEADER -->
+  <section class="editorial-row hero border-b border-gray-100">
+    <div class="col-L p-0 overflow-hidden">
+      <div class="tg-grid">
+        <div style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=400&q=80');"><span>IIT</span></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=400&q=80');"><span>IIM</span></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=400&q=80');"><span>AI</span></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=400&q=80');"><span>NEET</span></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80');"><span>JEE</span></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80');"><span>CAT</span></div>
+      </div>
+    </div>
+    
+    <div class="col-C py-12 flex items-center justify-center">
+      <div class="text-center">
+        <h1 class="text-4xl lg:text-6xl font-black tracking-tighter text-coral uppercase mb-2">SHIKSHA</h1>
+        <p class="text-xs text-white/80 font-medium tracking-widest uppercase">Colleges · Exams · Courses</p>
+      </div>
+    </div>
+    
+    <div class="col-R p-0 overflow-hidden">
+      <div class="tg-grid">
+        <div style="background-image: url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=400&q=80');"><span>UG</span></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80');"><span>PG</span></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&q=80');"><span>MBA</span></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=400&q=80');"><span>STEM</span></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=400&q=80');"><span>LAW</span></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=400&q=80');"><span>ABROAD</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: SEARCH & DISCOVERY -->
+  <section class="editorial-row border-b border-gray-100">
+    <div class="col-L">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-3">Find colleges, courses & exams</h2>
+      <p class="text-gray-600 text-sm mb-6">Explore verified data for over 67,000+ top educational institutions in India and abroad.</p>
+      
+      <!-- Live Search Box -->
+      <form class="flex border-2 border-burgundy rounded-lg overflow-hidden shadow-sm" onsubmit="event.preventDefault(); handleSearch();">
+        <input id="searchInput" type="text" placeholder="Search colleges, exams, courses or news..." class="flex-1 px-4 py-3 text-sm focus:outline-none" aria-label="Search">
+        <button type="submit" class="bg-burgundy hover:bg-burgundy-dark text-white text-xs font-bold uppercase tracking-wider px-6 transition">
+          Search
+        </button>
+      </form>
+
+      <!-- Stat Badges -->
+      <div class="grid grid-cols-2 gap-3 mt-6">
+        <div class="bg-burgundy-bg p-3 rounded-lg border border-burgundy/10">
+          <div class="text-lg font-black text-burgundy">67,000+</div>
+          <div class="text-xs text-gray-600 font-semibold">Colleges Listed</div>
+        </div>
+        <div class="bg-burgundy-bg p-3 rounded-lg border border-burgundy/10">
+          <div class="text-lg font-black text-burgundy">4.85 Lakh+</div>
+          <div class="text-xs text-gray-600 font-semibold">Courses Detailed</div>
+        </div>
+        <div class="bg-burgundy-bg p-3 rounded-lg border border-burgundy/10">
+          <div class="text-lg font-black text-burgundy">7.15 Lakh+</div>
+          <div class="text-xs text-gray-600 font-semibold">Student Reviews</div>
+        </div>
+        <div class="bg-burgundy-bg p-3 rounded-lg border border-burgundy/10">
+          <div class="text-lg font-black text-burgundy">1,150+</div>
+          <div class="text-xs text-gray-600 font-semibold">Entrance Exams</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-C">
+      <span>DECIDE RIGHT</span>
+    </div>
+
+    <div class="col-R" id="compare">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-3">Compare Colleges</h2>
+      <p class="text-gray-600 text-sm mb-6">Unbiased comparisons based on official placement statistics, fees, rankings, cutoffs, and student reviews.</p>
+
+      <!-- Campus Image Card -->
+      <div class="relative rounded-xl overflow-hidden mb-6 shadow-md group">
+        <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80" alt="Campus" class="w-full h-40 object-cover group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 background-gradient bg-gradient-to-t from-black/80 via-black/20 to-transparent p-4 flex flex-col justify-end text-white">
+          <span class="text-xs font-bold text-coral uppercase tracking-wider">Comparison Tool</span>
+          <h3 class="text-sm font-bold">Compare IIT Bombay vs IIT Delhi vs BITS Pilani</h3>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <a href="#compare" class="block w-full text-center py-3 px-4 border-2 border-burgundy text-burgundy font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-burgundy hover:text-white transition">
+          Launch College Comparison
+        </a>
+        <a href="#predictor" class="block w-full text-center py-3 px-4 bg-coral text-white font-bold text-xs uppercase tracking-wider rounded-lg hover:bg-opacity-90 transition shadow-sm">
+          Try Rank Predictor 2026
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: TABBED GUIDANCE HUB -->
+  <section class="editorial-row border-b border-gray-100">
+    <div class="col-L">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-3">Tailored Guidance</h2>
+      <p class="text-gray-600 text-sm mb-6">Select your stream to view personalized entrance advice, top cutoffs, and university roadmaps.</p>
+
+      <!-- Stream Selector Buttons -->
+      <div class="grid grid-cols-2 gap-2" id="stream-tabs">
+        <button onclick="switchStream('MBA')" class="stream-btn active py-2.5 px-3 text-xs font-bold uppercase rounded border border-burgundy bg-burgundy text-white">MBA</button>
+        <button onclick="switchStream('ENGINEERING')" class="stream-btn py-2.5 px-3 text-xs font-bold uppercase rounded border border-burgundy text-burgundy hover:bg-burgundy-bg">Engineering</button>
+        <button onclick="switchStream('MEDICAL')" class="stream-btn py-2.5 px-3 text-xs font-bold uppercase rounded border border-burgundy text-burgundy hover:bg-burgundy-bg">Medical</button>
+        <button onclick="switchStream('DESIGN')" class="stream-btn py-2.5 px-3 text-xs font-bold uppercase rounded border border-burgundy text-burgundy hover:bg-burgundy-bg">Design</button>
+      </div>
+    </div>
+
+    <div class="col-C">
+      <span>PATHWAYS</span>
+    </div>
+
+    <div class="col-R">
+      <div id="stream-content" class="space-y-4">
+        <!-- Content inserted dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: LATEST NEWS & EDITORIAL ARTICLES WITH THUMBNAILS -->
+  <section class="editorial-row border-b border-gray-100">
+    <div class="col-L">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-4">Latest Educational News</h2>
+      
+      <div class="space-y-4">
+        <!-- News Item 1 -->
+        <a href="#news1" class="flex gap-4 p-2 rounded-lg hover:bg-burgundy-bg transition card-hover border-b border-gray-100 pb-3">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=150&q=80" alt="News" class="w-20 h-20 object-cover rounded-md flex-shrink-0">
+          <div>
+            <span class="text-[10px] font-extrabold text-white bg-burgundy px-2 py-0.5 rounded uppercase tracking-wider">Engineering</span>
+            <h3 class="text-sm font-bold text-gray-900 mt-1 leading-snug hover:text-burgundy">VITEEE 2027 Registration Opens: Check Exam Dates, Eligibility & Pattern Changes</h3>
+            <p class="text-xs text-gray-400 mt-1">Upasana Pradhan · Oct 21, 2026</p>
+          </div>
+        </a>
+
+        <!-- News Item 2 -->
+        <a href="#news2" class="flex gap-4 p-2 rounded-lg hover:bg-burgundy-bg transition card-hover border-b border-gray-100 pb-3">
+          <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=150&q=80" alt="News" class="w-20 h-20 object-cover rounded-md flex-shrink-0">
+          <div>
+            <span class="text-[10px] font-extrabold text-white bg-burgundy px-2 py-0.5 rounded uppercase tracking-wider">MBA</span>
+            <h3 class="text-sm font-bold text-gray-900 mt-1 leading-snug hover:text-burgundy">Top 10 Government MBA Colleges in India: NIRF Rankings & Placement Reports</h3>
+            <p class="text-xs text-gray-400 mt-1">Vipra Shrivastava · Oct 21, 2026</p>
+          </div>
+        </a>
+
+        <!-- News Item 3 -->
+        <a href="#news3" class="flex gap-4 p-2 rounded-lg hover:bg-burgundy-bg transition card-hover">
+          <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=150&q=80" alt="News" class="w-20 h-20 object-cover rounded-md flex-shrink-0">
+          <div>
+            <span class="text-[10px] font-extrabold text-white bg-burgundy px-2 py-0.5 rounded uppercase tracking-wider">CAT 2026</span>
+            <h3 class="text-sm font-bold text-gray-900 mt-1 leading-snug hover:text-burgundy">Best CAT Preparation Hubs: Fee Structures & Expert Tips</h3>
+            <p class="text-xs text-gray-400 mt-1">Sayeba Naushad · Oct 21, 2026</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-C">
+      <span>UPDATES</span>
+    </div>
+
+    <div class="col-R">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-4">Admissions & Counseling</h2>
+
+      <div class="space-y-4">
+        <!-- News Item 4 -->
+        <a href="#news4" class="flex gap-4 p-2 rounded-lg hover:bg-burgundy-bg transition card-hover border-b border-gray-100 pb-3">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=150&q=80" alt="News" class="w-20 h-20 object-cover rounded-md flex-shrink-0">
+          <div>
+            <span class="text-[10px] font-extrabold text-white bg-coral px-2 py-0.5 rounded uppercase tracking-wider">NEET UG</span>
+            <h3 class="text-sm font-bold text-gray-900 mt-1 leading-snug hover:text-burgundy">State NEET UG Round 4 Seat Allocation Result Released: Download PDF</h3>
+            <p class="text-xs text-gray-400 mt-1">Mayank Uniyal · Oct 21, 2026</p>
+          </div>
+        </a>
+
+        <!-- News Item 5 -->
+        <a href="#news5" class="flex gap-4 p-2 rounded-lg hover:bg-burgundy-bg transition card-hover border-b border-gray-100 pb-3">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=150&q=80" alt="News" class="w-20 h-20 object-cover rounded-md flex-shrink-0">
+          <div>
+            <span class="text-[10px] font-extrabold text-white bg-coral px-2 py-0.5 rounded uppercase tracking-wider">IIFT</span>
+            <h3 class="text-sm font-bold text-gray-900 mt-1 leading-snug hover:text-burgundy">IIFT MBA (IB) Admissions Announced: CAT Cutoffs & Application Criteria</h3>
+            <p class="text-xs text-gray-400 mt-1">Vipra Shrivastava · Oct 21, 2026</p>
+          </div>
+        </a>
+      </div>
+
+      <a href="#all-news" class="block w-full text-center mt-6 py-2.5 px-4 border border-burgundy text-burgundy font-bold text-xs uppercase tracking-wider rounded hover:bg-burgundy hover:text-white transition">
+        Read All News & Bulletins
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION 5: CAMPUS VIDEO TOURS & PREVIEWS -->
+  <section class="editorial-row border-b border-gray-100">
+    <div class="col-L">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-3">Campus Video Tours</h2>
+      <p class="text-gray-600 text-sm mb-4">Watch real campus walkthroughs, student hostel reviews, and placement drive insights.</p>
+      
+      <!-- Featured Video Card -->
+      <div class="relative rounded-xl overflow-hidden shadow-lg group cursor-pointer" onclick="playFeaturedVideo()">
+        <img id="main-video-img" src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=600&q=80" alt="Video Thumbnail" class="w-full h-52 object-cover group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition flex items-center justify-center">
+          <div class="w-14 h-14 bg-coral text-white rounded-full flex items-center justify-center shadow-xl transform group-hover:scale-110 transition">
+            <svg class="w-6 h-6 fill-current ml-1" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/90 to-transparent text-white">
+          <span class="text-[10px] font-bold text-coral uppercase tracking-wider">Featured Campus Tour</span>
+          <h3 id="main-video-title" class="text-sm font-bold line-clamp-1">Inside DY Patil International University: Campus, Placements & Hostels</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-C">
+      <span>CAMPUS TV</span>
+    </div>
+
+    <div class="col-R">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-3">More Campus Reviews</h2>
+      
+      <div class="space-y-3">
+        <!-- Video Playlist Item 1 -->
+        <button onclick="selectVideo('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80', '10 Things to Know Before Choosing Amity University Mumbai')" class="w-full text-left flex gap-3 p-2 rounded-lg hover:bg-burgundy-bg transition items-center border border-transparent hover:border-burgundy/20">
+          <div class="relative w-20 h-14 rounded overflow-hidden flex-shrink-0">
+            <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover" alt="Thumb">
+            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-gray-800 line-clamp-2">10 Things to Know Before Choosing Amity University Mumbai</span>
+        </button>
+
+        <!-- Video Playlist Item 2 -->
+        <button onclick="selectVideo('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80', 'Why Students Choose Bharati Vidyapeeth University Pune')" class="w-full text-left flex gap-3 p-2 rounded-lg hover:bg-burgundy-bg transition items-center border border-transparent hover:border-burgundy/20">
+          <div class="relative w-20 h-14 rounded overflow-hidden flex-shrink-0">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover" alt="Thumb">
+            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-gray-800 line-clamp-2">Why Students Choose Bharati Vidyapeeth University Pune</span>
+        </button>
+
+        <!-- Video Playlist Item 3 -->
+        <button onclick="selectVideo('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80', 'IIT Madras Campus Life & Research Labs Detailed Tour')" class="w-full text-left flex gap-3 p-2 rounded-lg hover:bg-burgundy-bg transition items-center border border-transparent hover:border-burgundy/20">
+          <div class="relative w-20 h-14 rounded overflow-hidden flex-shrink-0">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover" alt="Thumb">
+            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-gray-800 line-clamp-2">IIT Madras Campus Life & Research Labs Detailed Tour</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: INTERACTIVE COLLEGE PREDICTOR SLIDER -->
+  <section class="editorial-row border-b border-gray-100 bg-gray-50/50" id="predictor">
+    <div class="col-L">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-2">College Predictors 2026</h2>
+      <p class="text-gray-600 text-sm">Input your entrance exam rank or score to get personalized college admission chances.</p>
+    </div>
+    
+    <div class="col-C">
+      <span>PREDICT</span>
+    </div>
+
+    <div class="col-R flex items-center justify-end gap-2">
+      <button onclick="scrollPredictor(-300)" class="w-10 h-10 rounded-full bg-burgundy text-white flex items-center justify-center hover:bg-burgundy-dark transition shadow">←</button>
+      <button onclick="scrollPredictor(300)" class="w-10 h-10 rounded-full bg-burgundy text-white flex items-center justify-center hover:bg-burgundy-dark transition shadow">→</button>
+    </div>
+  </section>
+
+  <!-- PREDICTOR CAROUSEL SLIDER (Full Width Row Across Spine) -->
+  <div class="relative z-10 py-6 bg-burgundy-bg border-b border-gray-100">
+    <div id="predictor-slider" class="flex gap-4 overflow-x-auto hide-scrollbar px-6 max-w-[1400px] mx-auto scroll-smooth">
+      
+      <!-- Predictor Card 1 -->
+      <a href="#predict-btech" class="flex-shrink-0 w-60 bg-white border border-burgundy/20 rounded-xl overflow-hidden p-4 card-hover shadow-sm text-center">
+        <div class="w-16 h-16 rounded-full bg-burgundy text-white font-black text-xl flex items-center justify-center mx-auto mb-3 shadow">B.T</div>
+        <h3 class="font-extrabold text-burgundy text-sm">JEE Main & B.Tech</h3>
+        <p class="text-xs text-gray-500 mt-1">41 Exams · Cutoffs</p>
+        <span class="inline-block mt-3 text-[11px] font-bold text-coral uppercase tracking-wider">Predict Now →</span>
+      </a>
+
+      <!-- Predictor Card 2 -->
+      <a href="#predict-mba" class="flex-shrink-0 w-60 bg-white border border-burgundy/20 rounded-xl overflow-hidden p-4 card-hover shadow-sm text-center">
+        <div class="w-16 h-16 rounded-full bg-burgundy text-white font-black text-xl flex items-center justify-center mx-auto mb-3 shadow">MBA</div>
+        <h3 class="font-extrabold text-burgundy text-sm">CAT & MBA Colleges</h3>
+        <p class="text-xs text-gray-500 mt-1">32 Exams · Percentiles</p>
+        <span class="inline-block mt-3 text-[11px] font-bold text-coral uppercase tracking-wider">Predict Now →</span>
+      </a>
+
+      <!-- Predictor Card 3 -->
+      <a href="#predict-neet" class="flex-shrink-0 w-60 bg-white border border-burgundy/20 rounded-xl overflow-hidden p-4 card-hover shadow-sm text-center">
+        <div class="w-16 h-16 rounded-full bg-burgundy text-white font-black text-xl flex items-center justify-center mx-auto mb-3 shadow">MED</div>
+        <h3 class="font-extrabold text-burgundy text-sm">NEET Medical Rank</h3>
+        <p class="text-xs text-gray-500 mt-1">86 Exams · All India Seats</p>
+        <span class="inline-block mt-3 text-[11px] font-bold text-coral uppercase tracking-wider">Predict Now →</span>
+      </a>
+
+      <!-- Predictor Card 4 -->
+      <a href="#predict-law" class="flex-shrink-0 w-60 bg-white border border-burgundy/20 rounded-xl overflow-hidden p-4 card-hover shadow-sm text-center">
+        <div class="w-16 h-16 rounded-full bg-burgundy text-white font-black text-xl flex items-center justify-center mx-auto mb-3 shadow">LAW</div>
+        <h3 class="font-extrabold text-burgundy text-sm">CLAT & Law Colleges</h3>
+        <p class="text-xs text-gray-500 mt-1">31 Exams · NLUs List</p>
+        <span class="inline-block mt-3 text-[11px] font-bold text-coral uppercase tracking-wider">Predict Now →</span>
+      </a>
+
+      <!-- Predictor Card 5 -->
+      <a href="#predict-design" class="flex-shrink-0 w-60 bg-white border border-burgundy/20 rounded-xl overflow-hidden p-4 card-hover shadow-sm text-center">
+        <div class="w-16 h-16 rounded-full bg-burgundy text-white font-black text-xl flex items-center justify-center mx-auto mb-3 shadow">DES</div>
+        <h3 class="font-extrabold text-burgundy text-sm">NIFT & NID Predictor</h3>
+        <p class="text-xs text-gray-500 mt-1">10 Exams · Portfolio Check</p>
+        <span class="inline-block mt-3 text-[11px] font-bold text-coral uppercase tracking-wider">Predict Now →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- SECTION 7: POPULAR EXAMS & TRENDING COLLEGES CHIPS -->
+  <section class="editorial-row border-b border-gray-100">
+    <div class="col-L">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-4">Top Entrance Exams</h2>
+      <div class="flex flex-wrap gap-2">
+        <a href="#exam-jee" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">JEE Main 2026</a>
+        <a href="#exam-neet" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">NEET UG</a>
+        <a href="#exam-cat" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">CAT 2026</a>
+        <a href="#exam-cuet" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">CUET UG</a>
+        <a href="#exam-clat" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">CLAT</a>
+        <a href="#exam-gate" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">GATE</a>
+        <a href="#exam-nda" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">NDA Exam</a>
+        <a href="#exam-nid" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">NID DAT</a>
+      </div>
+    </div>
+
+    <div class="col-C">
+      <span>TOP SEARCHES</span>
+    </div>
+
+    <div class="col-R">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-4">Trending Universities</h2>
+      <div class="flex flex-wrap gap-2">
+        <a href="#univ-iitb" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">IIT Bombay</a>
+        <a href="#univ-iitm" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">IIT Madras</a>
+        <a href="#univ-vit" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">VIT Vellore</a>
+        <a href="#univ-lpu" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">LPU Punjab</a>
+        <a href="#univ-cu" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">Chandigarh Univ</a>
+        <a href="#univ-amity" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">Amity Noida</a>
+        <a href="#univ-bhu" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">BHU Varanasi</a>
+        <a href="#univ-iima" class="px-3 py-1.5 border border-burgundy/30 text-burgundy rounded-full text-xs font-semibold hover:bg-burgundy hover:text-white transition">IIM Ahmedabad</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: MOBILE APP SHOWCASE -->
+  <section class="editorial-row border-b border-gray-100 bg-gradient-to-r from-white via-burgundy-bg/50 to-white">
+    <div class="col-L">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-2">Get the Shiksha App</h2>
+      <p class="text-xs font-extrabold text-coral uppercase tracking-widest mb-4">1M+ Downloads · 4.5★ Rating</p>
+      
+      <ul class="space-y-2.5 text-xs text-gray-700 font-medium mb-6">
+        <li class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-burgundy" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          Real-time admission & exam countdown alerts
+        </li>
+        <li class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-burgundy" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          Tailored college recommendations based on budget
+        </li>
+        <li class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-burgundy" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          Direct Q&A with current university students & alumni
+        </li>
+      </ul>
+
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="#playstore" class="px-4 py-2.5 bg-burgundy text-white font-bold text-xs uppercase tracking-wider rounded-lg text-center hover:bg-burgundy-dark transition">Google Play Store</a>
+        <a href="#appstore" class="px-4 py-2.5 border border-burgundy text-burgundy font-bold text-xs uppercase tracking-wider rounded-lg text-center hover:bg-burgundy-bg transition">Apple App Store</a>
+      </div>
+    </div>
+
+    <div class="col-C">
+      <span>SHIKSHA APP</span>
+    </div>
+
+    <div class="col-R flex justify-center items-center">
+      <!-- Mockup Phone Visual -->
+      <div class="w-48 bg-gray-900 rounded-[28px] p-2.5 shadow-2xl border-2 border-gray-800">
+        <div class="bg-white rounded-[20px] overflow-hidden p-3 text-center">
+          <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-3"></div>
+          <div class="bg-burgundy-bg rounded-lg p-3 text-left mb-3">
+            <span class="text-[9px] font-black text-burgundy uppercase">Exam Countdown</span>
+            <div class="text-sm font-extrabold text-burgundy">JEE Main 2026</div>
+            <div class="text-xs text-coral font-bold mt-1">28 Days Left</div>
+          </div>
+          <div class="bg-gray-100 rounded-lg p-2 text-left mb-2">
+            <div class="w-16 h-2 bg-gray-300 rounded mb-1"></div>
+            <div class="w-24 h-2 bg-gray-200 rounded"></div>
+          </div>
+          <div class="w-full py-2 bg-burgundy text-white text-[10px] font-bold rounded-lg uppercase tracking-wider mt-4">
+            Download App
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: EXPERT Q&A SUBMISSION HUB -->
+  <section class="editorial-row">
+    <div class="col-L">
+      <h2 class="text-xl font-extrabold uppercase text-burgundy tracking-wide mb-2">Ask Our Experts</h2>
+      <p class="text-gray-600 text-sm">Have doubts about admissions, cutoffs, or fees? Ask verified counselors and receive answers within 24 hours.</p>
+    </div>
+
+    <div class="col-C">
+      <span>ASK EXPERT</span>
+    </div>
+
+    <div class="col-R">
+      <form onsubmit="event.preventDefault(); submitQuestion();" class="flex border-2 border-burgundy rounded-lg overflow-hidden shadow-sm">
+        <input id="askInput" type="text" placeholder="Type your education query here..." class="flex-1 px-4 py-3 text-sm focus:outline-none" required aria-label="Ask Question">
+        <button type="submit" class="bg-coral hover:bg-opacity-90 text-white font-bold text-xs uppercase tracking-wider px-6 transition">
+          Ask Now
+        </button>
+      </form>
+      <div id="ask-feedback" class="hidden text-xs text-green-700 font-bold mt-2">Your question has been sent to our verified counselors!</div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER REDESIGN -->
+<footer class="bg-burgundy text-white pt-16 pb-12">
+  <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 text-xs">
+    
+    <div>
+      <h4 class="text-coral font-extrabold uppercase tracking-widest mb-4">MBA</h4>
+      <ul class="space-y-2 opacity-90">
+        <li><a href="#" class="hover:underline">Top MBA Colleges</a></li>
+        <li><a href="#" class="hover:underline">CAT Exam Guide</a></li>
+        <li><a href="#" class="hover:underline">Online MBA Programs</a></li>
+        <li><a href="#" class="hover:underline">Executive MBA</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-coral font-extrabold uppercase tracking-widest mb-4">Engineering</h4>
+      <ul class="space-y-2 opacity-90">
+        <li><a href="#" class="hover:underline">Top B.Tech Colleges</a></li>
+        <li><a href="#" class="hover:underline">JEE Main Cutoffs</a></li>
+        <li><a href="#" class="hover:underline">JEE Advanced Updates</a></li>
+        <li><a href="#" class="hover:underline">Top IITs & NITs</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-coral font-extrabold uppercase tracking-widest mb-4">Medicine</h4>
+      <ul class="space-y-2 opacity-90">
+        <li><a href="#" class="hover:underline">NEET UG College List</a></li>
+        <li><a href="#" class="hover:underline">NEET PG Updates</a></li>
+        <li><a href="#" class="hover:underline">Top Medical Colleges</a></li>
+        <li><a href="#" class="hover:underline">BDS & Dental Admissions</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-coral font-extrabold uppercase tracking-widest mb-4">Study Abroad</h4>
+      <ul class="space-y-2 opacity-90">
+        <li><a href="#" class="hover:underline">Universities in USA</a></li>
+        <li><a href="#" class="hover:underline">Universities in UK</a></li>
+        <li><a href="#" class="hover:underline">IELTS Prep Guide</a></li>
+        <li><a href="#" class="hover:underline">MS Abroad Programs</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-coral font-extrabold uppercase tracking-widest mb-4">Resources</h4>
+      <ul class="space-y-2 opacity-90">
+        <li><a href="#" class="hover:underline">Ask A Question</a></li>
+        <li><a href="#" class="hover:underline">Write A Review</a></li>
+        <li><a href="#" class="hover:underline">Exam Calendar 2026</a></li>
+        <li><a href="#" class="hover:underline">Salary Data Reports</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-coral font-extrabold uppercase tracking-widest mb-4">Info Edge Group</h4>
+      <ul class="space-y-2 opacity-90">
+        <li><a href="#" class="hover:underline">Naukri.com</a></li>
+        <li><a href="#" class="hover:underline">99acres.com</a></li>
+        <li><a href="#" class="hover:underline">Jeevansathi.com</a></li>
+        <li><a href="#" class="hover:underline">AmbitionBox.com</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="max-w-[1400px] mx-auto px-6 mt-12 pt-6 border-t border-white/20 flex flex-col md:flex-row justify-between items-center text-[11px] opacity-75">
+    <p>© Concept redesign of shiksha.com · Editorial 3-Column Burgundy Spine Theme</p>
+    <p>Helpline: 1800-888-9999 | Help Email: support@shiksha.com</p>
+  </div>
+</footer>
+
+<!-- INTERACTIVE SCRIPTS -->
+<script>
+  // Dynamic Tab Stream Guidance
+  const streamData = {
+    'MBA': [
+      { title: 'MBA Entrance Exams', desc: 'CAT, XAT, CMAT, SNAP, MAT score predictions', link: '#mba-exams' },
+      { title: 'Top MBA Colleges', desc: 'IIMs, XLRI, FMS, SPJIMR ranking and fees', link: '#mba-colleges' },
+      { title: 'MBA Predictor 2026', desc: 'Predict call odds based on your score', link: '#mba-predictor' }
+    ],
+    'ENGINEERING': [
+      { title: 'Engineering Exams', desc: 'JEE Main, BITSAT, VITEEE, KEAM cutoff ranks', link: '#eng-exams' },
+      { title: 'Top B.Tech Institutions', desc: 'IITs, NITs, IIITs & private university rankings', link: '#eng-colleges' },
+      { title: 'JEE Rank Predictor', desc: 'Calculate college allotment using percentile', link: '#eng-predictor' }
+    ],
+    'MEDICAL': [
+      { title: 'Medical Entrance Exams', desc: 'NEET UG, NEET PG, INI CET counseling', link: '#med-exams' },
+      { title: 'Top MBBS Colleges', desc: 'AIIMS Delhi, JIPMER, KGMU fee structures', link: '#med-colleges' },
+      { title: 'NEET Rank Predictor', desc: 'Predict state quota vs AIQ medical seats', link: '#med-predictor' }
+    ],
+    'DESIGN': [
+      { title: 'Design Exams', desc: 'NIFT, NID DAT, UCEED, CEED exam schedule', link: '#des-exams' },
+      { title: 'Top Fashion & Product Design', desc: 'NIFT Delhi, NID Ahmedabad, Srishti Institute', link: '#des-colleges' },
+      { title: 'Design Seat Predictor', desc: 'Check portfolio cutoffs and interview chances', link: '#des-predictor' }
+    ]
+  };
+
+  function switchStream(streamKey) {
+    const container = document.getElementById('stream-content');
+    const buttons = document.querySelectorAll('#stream-tabs button');
+    
+    // Update active tab buttons
+    buttons.forEach(btn => {
+      if (btn.innerText.toUpperCase() === streamKey || (btn.innerText === 'Engineering' && streamKey === 'ENGINEERING')) {
+        btn.className = "stream-btn py-2.5 px-3 text-xs font-bold uppercase rounded border border-burgundy bg-burgundy text-white";
+      } else {
+        btn.className = "stream-btn py-2.5 px-3 text-xs font-bold uppercase rounded border border-burgundy text-burgundy hover:bg-burgundy-bg";
+      }
+    });
+
+    // Populate tab content
+    const items = streamData[streamKey];
+    container.innerHTML = items.map(item => `
+      <a href="${item.link}" class="block p-3.5 bg-burgundy-bg/60 border border-burgundy/10 rounded-lg hover:border-burgundy/40 transition card-hover">
+        <h3 class="font-extrabold text-burgundy text-sm">${item.title}</h3>
+        <p class="text-xs text-gray-600 mt-1">${item.desc}</p>
+      </a>
+    `).join('');
+  }
+
+  // Initial load
+  switchStream('MBA');
+
+  // Interactive Nav Dropdown Menu
+  const navData = {
+    'mba': [
+      { category: 'Top Colleges', items: ['Top MBA Colleges India', 'Top IIMs', 'Top Private MBA Colleges', 'Online MBA Courses'] },
+      { category: 'Exams', items: ['CAT 2026', 'XAT 2026', 'CMAT', 'SNAP Exam'] },
+      { category: 'Predictors', items: ['CAT Percentile Predictor', 'MBA College Predictor', 'MAH CET Predictor'] }
+    ],
+    'engineering': [
+      { category: 'Top Colleges', items: ['Top B.Tech Colleges', 'Top IITs', 'Top NITs', 'Top Private Engineering'] },
+      { category: 'Exams', items: ['JEE Main 2026', 'JEE Advanced', 'BITSAT', 'GATE 2026'] },
+      { category: 'Predictors', items: ['JEE Main College Predictor', 'KEAM Rank Predictor', 'MHT CET Predictor'] }
+    ]
+  };
+
+  let currentOpenNav = null;
+  function toggleMenu(key) {
+    const drawer = document.getElementById('nav-dropdown');
+    const content = document.getElementById('dropdown-content');
+
+    if (currentOpenNav === key) {
+      drawer.classList.add('hidden');
+      currentOpenNav = null;
+      return;
+    }
+
+    currentOpenNav = key;
+    const data = navData[key] || [
+      { category: 'Popular Searches', items: ['Course Options', 'Fee Structure', 'Admission Process', 'Placement Reports'] },
+      { category: 'Resources', items: ['Rank Predictors', 'College Comparison', 'Ask An Expert', 'Student Reviews'] }
+    ];
+
+    content.innerHTML = data.map(col => `
+      <div>
+        <h4 class="text-xs font-extrabold uppercase text-burgundy tracking-wider mb-3">${col.category}</h4>
+        <ul class="space-y-2 text-xs text-gray-600 font-medium">
+          ${col.items.map(i => `<li><a href="#" class="hover:text-burgundy hover:underline">${i}</a></li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+
+    drawer.classList.remove('hidden');
+  }
+
+  // Scroll Horizontal Predictor Slider
+  function scrollPredictor(amount) {
+    document.getElementById('predictor-slider').scrollBy({ left: amount, behavior: 'smooth' });
+  }
+
+  // Interactive Video Switching
+  function selectVideo(imgUrl, title) {
+    document.getElementById('main-video-img').src = imgUrl;
+    document.getElementById('main-video-title').innerText = title;
+  }
+
+  function playFeaturedVideo() {
+    alert("Playing video: " + document.getElementById('main-video-title').innerText);
+  }
+
+  function handleSearch() {
+    const q = document.getElementById('searchInput').value.trim();
+    if(q) {
+      alert("Searching Shiksha database for: " + q);
+    }
+  }
+
+  function submitQuestion() {
+    const input = document.getElementById('askInput');
+    if(input.value.trim()) {
+      document.getElementById('ask-feedback').classList.remove('hidden');
+      input.value = '';
+      setTimeout(() => {
+        document.getElementById('ask-feedback').classList.add('hidden');
+      }, 4000);
+    }
+  }
+</script>
+</body>
+</html>
